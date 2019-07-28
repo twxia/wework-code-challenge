@@ -8,7 +8,7 @@ describe('system reducer', () => {
 
   it('should handle UPDATE_MESSAGE correctly', () => {
     const message = 'hi there';
-    const result = { ...initialState };
+    const result = { message: '' };
     result.message = message;
 
     expect(reducer({}, updateMessageAction({ message }))).toEqual(result);
