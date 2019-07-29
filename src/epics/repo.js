@@ -2,9 +2,10 @@
 import { of, from } from 'rxjs';
 import { switchMap, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { getRepo, getRepoPullsOnePerPage } from '@/services/Github/repo';
-import { getRepoSuccess, getRepoPullsOnePerPage as getRepoPullsOnePerPageAction, getRepoPullsCountSuccess } from '@/actions/repo';
-import { GET_REPO, GET_REPO_PULLS_ONE_PER_PAGE } from '@/constants/repo';
+import { getRepo, getRepoPullsOnePerPage, getRepoStargazers } from '@/services/Github/repo';
+import { getRepoSuccess, getRepoPullsOnePerPage as getRepoPullsOnePerPageAction, getRepoPullsCountSuccess, getRepoStargazersSuccess } from '@/actions/repo';
+import { getUser } from '@/actions/user';
+import { GET_REPO, GET_REPO_STARGAZERS, GET_REPO_PULLS_ONE_PER_PAGE } from '@/constants/repo';
 
 export const getRepoEpic = action$ =>
   action$.pipe(
@@ -29,7 +30,20 @@ export const getRepoPullsOnePerPageEpic = action$ =>
     )
   );
 
+export const getRepoStargazersEpic = action$ =>
+  action$.pipe(
+    ofType(GET_REPO_STARGAZERS),
+    switchMap(({ payload }) =>
+      from(getRepoStargazers(payload)).pipe(
+        switchMap((data) => of(
+          getRepoStargazersSuccess({ name: payload.name, data }),
+          ...data.map(user => getUser({ name: user.login }))
+        )))
+    )
+  )
+
 export default [
   getRepoEpic,
   getRepoPullsOnePerPageEpic,
+  getRepoStargazersEpic,
 ];

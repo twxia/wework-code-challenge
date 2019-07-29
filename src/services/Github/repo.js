@@ -12,7 +12,12 @@ export const getRepoStargazers = ({ name }) =>
 
 export const getRepoPullsOnePerPage = ({ name }) =>
   get({
-    endpoint: `/repos/${name}/pulls?state=open&page=1&per_page=1`,
+    endpoint: `/repos/${name}/pulls`,
+    request: {
+      state: 'open',
+      page: 1,
+      per_page: 1,
+    },
     isCustomized: true,
   })
     .then(response => Promise.all([
@@ -21,5 +26,5 @@ export const getRepoPullsOnePerPage = ({ name }) =>
     ]))
     .then(response => ({
       body: response[0],
-      totalPages: Number(response[1].get('Link').match(/,.*&page=(.*)&.*; rel="last"/)[1]),
+      totalPages: Number(response[1].get('Link').match(/,.*&page=(\d*)&.*; rel="last"/)[1]),
     }));

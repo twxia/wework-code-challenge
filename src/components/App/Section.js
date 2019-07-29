@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Flex, Box } from '@rebass/grid';
 import { clickableStyle } from '@/constants/styles';
+import { Link } from 'react-router-dom';
 import { getRepo as getRepoAction } from '@/actions/repo';
 
 const Wrapper = styled(Flex)`
@@ -35,13 +36,17 @@ const Center = styled.div`
 
 export function Section({ repoName, repoDetail, getRepo }) {
   useEffect(() => {
-    getRepo({ name: repoName });
+    if (!repoDetail) {
+      getRepo({ name: repoName });
+    }
   }, []);
 
   return (
     <Wrapper flexDirection={'column'} my={3} p={[2, 3]}>
       <Title>
-        {repoDetail && repoDetail.name}
+        <Link to={`/profile/${repoName}`}>
+          {repoDetail && repoDetail.name}
+        </Link>
       </Title>
       <Box my={3}>
         {repoDetail && repoDetail.description}
