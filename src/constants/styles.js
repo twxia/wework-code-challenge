@@ -5,7 +5,6 @@ export const clickableStyle = ({
   color,
   bgColor,
   borderColor,
-  boxShadow,
 }) => css`
   cursor: pointer;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,

@@ -27,7 +27,7 @@
     "comma-dangle": [1, "always-multiline"],
     "camelcase": 0,
     "no-dupe-keys": 1,
-    "no-unused-vars": [1, { "vars": "local", "args": "none" }],
+    "no-unused-vars": ["error", { "args": "none" }],
     "no-use-before-define": [1, "nofunc"],
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,

@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Flex, Box } from '@rebass/grid';
-import { fromEvent } from 'rxjs';
-import { throttleTime, filter } from 'rxjs/operators';
 import Link from '@/components/Link';
+import useInfiniteScroll from '@/components/Hooks/useInfiniteScroll';
 import Section from './Section';
 import { getRepoStargazers as getRepoStargazersAction, clearRepoStargazers as clearRepoStargazersAction } from '@/actions/repo';
 
@@ -24,28 +23,11 @@ export function Profile({ match, stargazers, users, getRepoStargazers, clearRepo
   const isStargazerListLoading = stargazers.isLoading;
   const nextStargazerListPage = stargazers.nextPage;
 
-  useEffect(() => {
-    if (!stargazerList.length) {
-      getRepoStargazers({ name: repoName });
-    }
-    return () => clearRepoStargazers();
-  }, []);
-
-  useEffect(() => {
-    const scroll$ = fromEvent(window, 'scroll')
-      .pipe(
-        throttleTime(150),
-        filter(() => !isStargazerListLoading)
-      )
-      .subscribe(() => {
-        const scrollTopRatio = (window.innerHeight + document.documentElement.scrollTop) / document.documentElement.offsetHeight;
-  
-        if (scrollTopRatio > 0.85) {
-          getRepoStargazers({ name: repoName, page: nextStargazerListPage });
-        }
-      });
-    return () => scroll$.unsubscribe();
-  }, [nextStargazerListPage, isStargazerListLoading]);
+  useInfiniteScroll({
+    onReach: () => getRepoStargazers({ name: repoName, page: nextStargazerListPage }),
+    onClear: clearRepoStargazers,
+    isLoading: isStargazerListLoading,
+  });
 
   return (
     <>
@@ -54,7 +36,7 @@ export function Profile({ match, stargazers, users, getRepoStargazers, clearRepo
       <Flex flexWrap={'wrap'}>
         {
           stargazerList.map(stargazer => (  
-            <ProfileWrapper width={[0.5, 0.33]} p={[2, 3]} isVisible={users[stargazer.login]}>
+            <ProfileWrapper key={stargazer.login} width={[0.5, 0.33]} p={[2, 3]} isVisible={users[stargazer.login]}>
               <ProfileLink href={users[stargazer.login] && users[stargazer.login].html_url} target={'_blank'} rel={'noopener noreferrer'}>
                 <Flex>
                   <Flex width={0.3} alignItems={'center'}>
