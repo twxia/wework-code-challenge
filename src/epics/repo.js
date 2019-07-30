@@ -35,12 +35,12 @@ export const getRepoStargazersEpic = action$ =>
     ofType(GET_REPO_STARGAZERS),
     switchMap(({ payload }) =>
       from(getRepoStargazers(payload)).pipe(
-        switchMap((data) => of(
-          getRepoStargazersSuccess({ name: payload.name, data }),
-          ...data.map(user => getUser({ name: user.login }))
+        switchMap(({ body: list, nextPage, totalPages }) => of(
+          getRepoStargazersSuccess({ list, nextPage, totalPages }),
+          ...list.map(user => getUser({ name: user.login }))
         )))
     )
-  )
+  );
 
 export default [
   getRepoEpic,

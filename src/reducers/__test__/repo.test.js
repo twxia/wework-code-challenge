@@ -1,5 +1,8 @@
 import reducer, { initialState } from '../repo';
 import { getRepoSuccess, getRepoPullsCountSuccess } from '@/actions/repo';
+import { cloneDeep } from 'lodash';
+
+const createInitialState = () => cloneDeep(initialState);
 
 describe('repo reducer', () => {
   it('should return the initial state', () => {
@@ -8,7 +11,7 @@ describe('repo reducer', () => {
 
   it('should handle GET_REPO_SUCCESS correctly', () => {
     const payload = { data: { full_name: 'test/repo', id: 321 }};
-    const result = { list: {} };
+    const result = createInitialState();
 
     result.list[payload.data.full_name] = payload.data;
 
@@ -17,7 +20,7 @@ describe('repo reducer', () => {
 
   it('should handle GET_REPO_PULLS_COUNT_SUCCESS correctly', () => {
     const payload = { name: 'test/repo', count: 321 };
-    const result = { list: {} };
+    const result = createInitialState();
 
     result.list[payload.name] = {};
     result.list[payload.name].pulls_count = payload.count;

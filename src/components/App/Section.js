@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Flex, Box } from '@rebass/grid';
-import { clickableStyle } from '@/constants/styles';
-import { Link } from 'react-router-dom';
+import Link from '@/components/Link';
 import { getRepo as getRepoAction } from '@/actions/repo';
 
 const Wrapper = styled(Flex)`
@@ -34,7 +33,7 @@ const Center = styled.div`
   align-items: center;
 `;
 
-export function Section({ repoName, repoDetail, getRepo }) {
+export function Section({ repoName, repoDetail, getRepo, isInProfile }) {
   useEffect(() => {
     if (!repoDetail) {
       getRepo({ name: repoName });
@@ -44,7 +43,7 @@ export function Section({ repoName, repoDetail, getRepo }) {
   return (
     <Wrapper flexDirection={'column'} my={3} p={[2, 3]}>
       <Title>
-        <Link to={`/profile/${repoName}`}>
+        <Link to={isInProfile ? repoDetail && repoDetail.html_url : `/profile/${repoName}`}>
           {repoDetail && repoDetail.name}
         </Link>
       </Title>
