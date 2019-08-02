@@ -10,6 +10,7 @@ const config = {
     filename: 'main.js',
     chunkFilename: '[name].[chunkhash].chunk.js',
     path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
   },
 
   devtool: 'inline-source-map',
