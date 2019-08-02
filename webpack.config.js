@@ -1,11 +1,15 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
+  mode: 'production',
   entry: './src/index.js',
   output: {
-    filename: '[name].js',
+    filename: 'main.js',
+    chunkFilename: '[name].[chunkhash].chunk.js',
     path: path.resolve(__dirname, 'build'),
-    publicPath: 'build',
   },
 
   devtool: 'inline-source-map',
@@ -16,8 +20,12 @@ const config = {
     port: 3000,
     historyApiFallback: true,
     disableHostCheck: true,
-    contentBase: 'public',
+    contentBase: path.resolve(__dirname, 'src'),
   },
+
+  plugins: [
+    // new BundleAnalyzerPlugin(),
+  ],
 
   module: {
     rules: [
@@ -32,4 +40,27 @@ const config = {
   },
 };
 
-module.exports = config;
+module.exports = (env, argv) => {
+  if (argv.mode === 'production') {
+    config.devtool = false;
+    config.plugins.push(
+      new CopyWebpackPlugin([{
+        from: 'src/index.html',
+      }])
+    );
+    config.optimization = {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            output: {
+              comments: false,
+            },
+          },
+        }),
+      ],
+    };
+  }
+
+  return config;
+};

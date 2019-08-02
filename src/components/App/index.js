@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Box } from '@rebass/grid';
 import { Route, Switch, Link } from 'react-router-dom';
 import { ENTITIES } from '@/constants/entities';
-import Main from './Main';
-import Profile from './Profile';
+
+const Main = lazy(() => import(/* webpackChunkName: "Main" */ './Main'));
+const Profile = lazy(() => import(/* webpackChunkName: "Profile" */ './Profile'));
 
 const Title = styled.h1`
 `;
@@ -19,11 +20,13 @@ export function App({ }) {
         </Link>
       </Title>
 
-      <Switch>
-        <Route path={'/'} exact component={Main} />
-        <Route path={`/profile/:name(${ENTITIES.join('|')})`} exact component={Profile} />
-        <Route exact component={Main} />
-      </Switch>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path={'/'} exact component={Main} />
+          <Route path={`/profile/:name(${ENTITIES.join('|')})`} exact component={Profile} />
+          <Route exact component={Main} />
+        </Switch>
+      </Suspense>
     </Box>
   );
 }
