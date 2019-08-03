@@ -1,7 +1,7 @@
 references:
   docker_default: &docker_default
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:10.16.1
   yarn_cache_key: &yarn_cache_key
     yarn-cache-{{ checksum "yarn.lock" }}
   restore_yarn: &restore_yarn
