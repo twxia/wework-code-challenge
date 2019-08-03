@@ -1,4 +1,3 @@
-
 import { of, from } from 'rxjs';
 import { switchMap, mergeMap } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
@@ -11,13 +10,9 @@ export const getUserEpic = action$ =>
     ofType(GET_USER),
     mergeMap(({ payload }) =>
       from(getUser(payload)).pipe(
-        switchMap((data) => of(
-          getUserSuccess({ data }),
-        ))
-      ),
-    ),
+        switchMap(data => of(getUserSuccess({ data })))
+      )
+    )
   );
 
-export default [
-  getUserEpic,
-];
+export default [getUserEpic];

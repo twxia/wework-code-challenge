@@ -56,4 +56,4 @@ export const getRepoPullsCountSuccess = ({ name, count }) => ({
     full_name: name,
     count,
   },
-})
+});

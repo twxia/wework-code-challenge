@@ -1,11 +1,7 @@
 import { css } from 'styled-components';
 import { darken } from 'polished';
 
-export const clickableStyle = ({
-  color,
-  bgColor,
-  borderColor,
-}) => css`
+export const clickableStyle = ({ color, bgColor, borderColor }) => css`
   cursor: pointer;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out;
