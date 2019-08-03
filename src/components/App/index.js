@@ -20,7 +20,7 @@ export function App({ }) {
         </Link>
       </Title>
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div data-testid={'loading-display'}>Loading...</div>}>
         <Switch>
           <Route path={'/'} exact component={Main} />
           <Route path={`/profile/:name(${ENTITIES.join('|')})`} exact component={Profile} />

@@ -30,13 +30,13 @@ export function Profile({ match, stargazers, users, getRepoStargazers, clearRepo
   });
 
   return (
-    <>
+    <div data-testid={'profile-component'}>
       <Section isInProfile repoName={repoName} />
 
       <Flex flexWrap={'wrap'}>
         {
           stargazerList.map(stargazer => (  
-            <ProfileWrapper key={stargazer.login} width={[0.5, 0.33]} p={[2, 3]} isVisible={users[stargazer.login]}>
+            <ProfileWrapper data-testid={'profile-wrapper'} key={stargazer.login} width={[0.5, 0.33]} p={[2, 3]} isVisible={users[stargazer.login]}>
               <ProfileLink href={users[stargazer.login] && users[stargazer.login].html_url} target={'_blank'} rel={'noopener noreferrer'}>
                 <Flex>
                   <Flex width={0.3} alignItems={'center'}>
@@ -51,14 +51,13 @@ export function Profile({ match, stargazers, users, getRepoStargazers, clearRepo
           ))
         }
       </Flex>
-    </>
+    </div>
   );
 }
 
 const mapStateToProps = (state) => ({
   stargazers: state.repo.stargazers,
   isLoading: state.repo.stargazers.isLoading,
-  stargazersNextPage: state.repo.stargazers.nextPage,
   users: state.user.list,
 });
 

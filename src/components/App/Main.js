@@ -9,7 +9,7 @@ const SectionTitle = styled.h2`
 
 export function Main({ }) {
   return (
-    <>
+    <div data-testid={'main-component'}>
       <SectionTitle>
         ALLIES
       </SectionTitle>
@@ -23,7 +23,7 @@ export function Main({ }) {
       <Section repoName={ENIMIES.vue} />
 
       <Section repoName={ENIMIES.angular} />
-    </>
+    </div>
   );
 }
 

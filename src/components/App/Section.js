@@ -47,18 +47,26 @@ export function Section({ repoName, repoDetail, getRepo, isInProfile }) {
           {repoDetail && repoDetail.name}
         </Link>
       </Title>
-      <Box my={3}>
+      <Box my={3} data-testid={'description-block'}>
         {repoDetail && repoDetail.description}
       </Box>
 
-      <Table mt={'auto'} justifyContent={'space-around'}>
+      <Table data-testid={'content-block'} mt={'auto'} justifyContent={'space-around'}>
         {repoDetail && repoDetail.isLoaded
           ? 
           <>
-            <Box fontSize={[12, 2]} mx={[1, 3]} my={2}>{repoDetail && repoDetail.stargazers_count.toLocaleString()} STARS</Box>
-            <Box fontSize={[12, 2]} mx={[1, 3]} my={2}>{repoDetail && repoDetail.open_issues_count.toLocaleString()} ISSUES</Box>
-            <Box fontSize={[12, 2]} mx={[1, 3]} my={2}>{repoDetail && repoDetail.forks_count.toLocaleString()} FORK</Box>
-            <Box fontSize={[12, 2]} mx={[1, 3]} my={2}>{repoDetail && repoDetail.pulls_count.toLocaleString()} <Inline>PULL REQUEST</Inline></Box>
+            <Box data-testid={'stars-block'} fontSize={[12, 2]} mx={[1, 3]} my={2}>
+              {repoDetail && repoDetail.stargazers_count.toLocaleString()} STARS
+            </Box>
+            <Box data-testid={'issues-block'} fontSize={[12, 2]} mx={[1, 3]} my={2}>
+              {repoDetail && repoDetail.open_issues_count.toLocaleString()} ISSUES
+            </Box>
+            <Box data-testid={'fork-block'} fontSize={[12, 2]} mx={[1, 3]} my={2}>
+              {repoDetail && repoDetail.forks_count.toLocaleString()} FORK
+            </Box>
+            <Box data-testid={'pr-block'} fontSize={[12, 2]} mx={[1, 3]} my={2}>
+              {repoDetail && repoDetail.pulls_count.toLocaleString()} <Inline>PULL REQUEST</Inline>
+            </Box>
           </>
           :
           <Center>Loading...</Center> 
