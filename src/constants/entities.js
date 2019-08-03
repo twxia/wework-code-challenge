@@ -7,7 +7,4 @@ export const ENIMIES = {
   angular: 'angular/angular',
 };
 
-export const ENTITIES = [
-  ...Object.values(ALLIES),
-  ...Object.values(ENIMIES),
-]
+export const ENTITIES = [...Object.values(ALLIES), ...Object.values(ENIMIES)];
