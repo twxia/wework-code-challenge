@@ -2,7 +2,7 @@ import React from 'react';
 import {
   wait,
   cleanup,
-} from 'react-testing-library';
+} from '@testing-library/react';
 import 'jest-styled-components';
 import renderWithReduxAndRouter from '@/utils/testing/renderWithReduxAndRouter';
 import { ENTITIES } from '@/constants/entities';
@@ -32,19 +32,16 @@ describe('index', () => {
     expect(component).toBeDefined();
   });
 
-  it('should profile route render correctly', async () => {
-    const eachTestCase = async (entity) => {
+  test.each(ENTITIES)(
+    'should profile route render %s correctly',
+    async (entity) => {
       const { getByTestId } = renderWithReduxAndRouter(<App />, { route: `/profile/${entity}` });
 
       let component;
       await wait(() => component = getByTestId('profile-component'));
       expect(component).toBeDefined();
-
-      return Promise.resolve();
     }
-
-    await Promise.all(ENTITIES.map(entity => eachTestCase(entity)));
-  });
+  );
 
   afterEach(cleanup);
 });

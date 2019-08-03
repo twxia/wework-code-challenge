@@ -3,7 +3,7 @@ import {
   render,
   fireEvent,
   cleanup,
-} from 'react-testing-library'
+} from '@testing-library/react'
 import 'jest-styled-components';
 import Button from '../index';
 

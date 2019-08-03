@@ -2,7 +2,7 @@ import React from 'react';
 import {
   cleanup,
   fireEvent,
-} from 'react-testing-library';
+} from '@testing-library/react';
 import renderWithReduxAndRouter from '@/utils/testing/renderWithReduxAndRouter';
 import 'jest-styled-components';
 import { Profile } from '../Profile';
