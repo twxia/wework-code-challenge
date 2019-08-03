@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   cleanup,
-} from 'react-testing-library'
+} from '@testing-library/react'
 import 'jest-styled-components';
 import renderWithReduxAndRouter from '@/utils/testing/renderWithReduxAndRouter';
 import Link from '../index';

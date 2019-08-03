@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   cleanup,
-} from 'react-testing-library';
+} from '@testing-library/react';
 import renderWithReduxAndRouter from '@/utils/testing/renderWithReduxAndRouter';
 import 'jest-styled-components';
 import { Section } from '../Section';

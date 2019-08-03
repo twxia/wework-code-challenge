@@ -2,7 +2,7 @@ import React from 'react';
 import {
   render,
   cleanup,
-} from 'react-testing-library'
+} from '@testing-library/react'
 import 'jest-styled-components';
 import ThemeProvider from '../index';
 
